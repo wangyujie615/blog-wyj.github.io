@@ -1,0 +1,16 @@
+<section class="archive-page tag-directory-page">
+  <header class="archive-header">
+    <p class="kicker">KNOWLEDGE MAP</p>
+    <h1>全部标签</h1>
+    <p>文件夹会自动成为标签，点击标签即可查看目录中的所有文章。</p>
+  </header>
+  <div class="tag-directory">
+    <% page.tags.sort('name').toArray().forEach(function(tag) { %>
+      <a class="tag-directory-item reveal" href="<%- url_for(tag.path) %>">
+        <span>#</span>
+        <strong><%= tag.name %></strong>
+        <small><%= tag.posts.length %> 篇</small>
+      </a>
+    <% }) %>
+  </div>
+</section>

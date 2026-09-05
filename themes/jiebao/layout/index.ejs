@@ -1,0 +1,115 @@
+<section class="hero" id="home">
+  <div class="hero-noise"></div>
+  <div class="hero-orb hero-orb-one"></div>
+  <div class="hero-orb hero-orb-two"></div>
+  <div class="hero-sparkles" aria-hidden="true"><i>✦</i><i>✧</i><i>✦</i></div>
+  <div class="hero-content">
+    <p class="eyebrow"><span></span><%= theme.hero.eyebrow %></p>
+    <h1 class="typewriter-title" data-typewriter="<%= theme.hero.title %>" aria-label="<%= theme.hero.title %>"><%= theme.hero.title %></h1>
+    <p class="hero-copy"><%= theme.hero.subtitle %></p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="#articles"><%= theme.hero.primary_text %><span>↓</span></a>
+      <a class="button button-ghost" href="#about"><%= theme.hero.secondary_text %></a>
+    </div>
+  </div>
+  <div class="hero-anime-scene" aria-hidden="true">
+    <span class="scene-sticker">SET SAIL!</span>
+    <div class="adventure-emblem">
+      <i class="emblem-ring"></i>
+      <span>J</span>
+      <b>N</b><b>E</b><b>S</b><b>W</b>
+    </div>
+    <p>CODE · EXPLORE · FREEDOM</p>
+  </div>
+  <div class="hero-index" aria-hidden="true">
+    <span>01</span><i></i><span>02</span>
+  </div>
+  <a class="scroll-cue" href="#articles" aria-label="向下滚动查看文章"><span></span>SCROLL</a>
+</section>
+
+<section class="articles-section" id="articles">
+  <div class="section-heading reveal">
+    <div>
+      <p class="kicker">LATEST WRITING</p>
+      <h2>最近文章</h2>
+    </div>
+    <a class="text-link" href="<%- url_for('/archives/') %>">查看全部 <span>↗</span></a>
+  </div>
+
+  <div class="blog-workspace">
+    <aside class="profile-sidebar reveal">
+      <div class="profile-card">
+        <span class="profile-card-star">✦</span>
+        <a class="profile-avatar" href="<%- url_for('/about/') %>" aria-label="查看我的个人主页">
+          <img src="<%- url_for(theme.profile.avatar) %>" alt="<%= theme.profile.name %> 的头像">
+        </a>
+        <p class="profile-online"><i></i><%= theme.profile.status %></p>
+        <h3><%= theme.profile.name %></h3>
+        <p class="profile-role"><%= theme.profile.role %></p>
+        <p class="profile-bio"><%= theme.profile.bio %></p>
+        <div class="profile-meta"><span>⌖</span><%= theme.profile.location %></div>
+        <a class="profile-more" href="#about">もっと見る <span>→</span></a>
+      </div>
+    </aside>
+
+    <div class="article-browser">
+      <div class="search-box reveal">
+        <span class="search-icon" aria-hidden="true"></span>
+        <input id="article-search" type="search" placeholder="搜索标题、内容或标签…" autocomplete="off" aria-label="搜索文章">
+        <button id="clear-search" type="button" aria-label="清空搜索">×</button>
+        <p><strong id="article-result-count"><%= site.posts.length %></strong> 篇笔记</p>
+      </div>
+
+      <div class="post-grid" id="article-results">
+        <% if (site.posts && site.posts.length) { %>
+          <% site.posts.sort('-date').each(function(post, index) { %>
+            <% const postTags = post.tags ? post.tags.toArray().map(function(tag) { return tag.name; }) : []; %>
+            <% const cleanExcerpt = strip_html(post.excerpt || post.content).replace(/\s+/g, ' '); %>
+            <article class="post-card reveal" data-search="<%= (post.title + ' ' + cleanExcerpt + ' ' + postTags.join(' ')).toLowerCase() %>" data-tags="<%= postTags.join('|') %>">
+          <a class="post-card-link" href="<%- url_for(post.path) %>">
+            <div class="post-visual visual-<%= (index % 4) + 1 %>">
+              <span class="post-number"><%= String(index + 1).padStart(2, '0') %></span>
+              <span class="visual-line"></span>
+            </div>
+            <div class="post-card-body">
+              <p class="post-meta"><time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'YYYY.MM.DD') %></time><span>·</span><%= post.tags && post.tags.length ? post.tags.first().name : '随笔' %></p>
+              <h3><%= post.title %></h3>
+              <p class="post-excerpt"><%= cleanExcerpt.slice(0, 110) %><%= cleanExcerpt.length > 110 ? '…' : '' %></p>
+              <% if (post.tags && post.tags.length) { %>
+                <div class="card-tags">
+                  <% post.tags.toArray().slice(0, 3).forEach(function(tag) { %><span>#<%= tag.name %></span><% }) %>
+                </div>
+              <% } %>
+              <span class="read-more">阅读全文 <i>→</i></span>
+            </div>
+          </a>
+            </article>
+          <% }) %>
+        <% } %>
+      </div>
+      <div class="search-empty" id="search-empty" hidden>
+        <span>☆</span><p>没有找到匹配的笔记，换个关键词试试吧。</p>
+      </div>
+    </div>
+
+    <aside class="tag-filter-sidebar reveal">
+      <div class="tag-filter-panel">
+        <p class="side-panel-title"><span>#</span> 标签检索</p>
+        <div class="tag-filter-cloud">
+          <button class="tag-filter tag-filter-all is-active" type="button" data-filter-tag="">ALL <sup><%= site.posts.length %></sup></button>
+          <% site.tags.sort('name').toArray().forEach(function(tag, index) { %>
+            <button class="tag-filter bubble-<%= (index % 4) + 1 %>" style="--tag-weight: <%= Math.min(tag.posts.length, 10) %>" type="button" data-filter-tag="<%= tag.name %>"># <%= tag.name %><sup><%= tag.posts.length %></sup></button>
+          <% }) %>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="about-section" id="about">
+  <p class="about-label reveal">ABOUT THIS SPACE</p>
+  <div class="about-copy reveal">
+    <h2>把复杂的事情<br>想清楚，也写清楚。</h2>
+    <p>这是 <%= config.author %> 的个人博客。关于技术实践、学习思考和日常观察——不追赶噪音，只收藏真正有价值的东西。</p>
+  </div>
+</section>

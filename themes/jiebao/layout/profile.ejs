@@ -1,0 +1,48 @@
+<section class="personal-page">
+  <div class="personal-hero">
+    <div class="personal-avatar">
+      <img src="<%- url_for(theme.profile.avatar) %>" alt="<%= theme.profile.name %> 的头像">
+      <i></i>
+    </div>
+    <div class="personal-intro">
+      <p class="kicker">PLAYER PROFILE · NO. 0615</p>
+      <h1><%= theme.profile.name %></h1>
+      <p class="personal-role"><%= theme.profile.role %></p>
+      <p class="personal-motto">“<%= theme.profile.motto %>”</p>
+      <div class="personal-actions">
+        <a href="<%= theme.profile.github %>" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a href="<%- url_for('/#articles') %>">阅读笔记 →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="personal-grid">
+    <article class="personal-panel personal-about">
+      <span class="panel-number">01</span>
+      <p class="kicker">ABOUT ME</p>
+      <h2>保持热血，也保持思考。</h2>
+      <p><%= theme.profile.bio %></p>
+      <p>这个博客是我的个人知识航海图。我在这里整理技术原理、项目经验和持续学习中的思考，希望每次记录都能成为下一次出发的坐标。</p>
+    </article>
+
+    <article class="personal-panel personal-focus">
+      <span class="panel-number">02</span>
+      <p class="kicker">CURRENT QUEST</p>
+      <h2>探索方向</h2>
+      <ul>
+        <% (theme.profile.focus || []).forEach(function(item, index) { %>
+          <li><span><%= String(index + 1).padStart(2, '0') %></span><%= item %></li>
+        <% }) %>
+      </ul>
+    </article>
+
+    <article class="personal-panel personal-stats">
+      <span class="panel-number">03</span>
+      <p class="kicker">BLOG DATA</p>
+      <h2>航行记录</h2>
+      <div><strong><%= site.posts.length %></strong><span>篇文章</span></div>
+      <div><strong><%= site.tags.length %></strong><span>个标签</span></div>
+      <div><strong>∞</strong><span>持续更新</span></div>
+    </article>
+  </div>
+</section>

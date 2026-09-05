@@ -1,0 +1,29 @@
+menu:
+  首页: /
+  文章: /#articles
+  标签: /tags/
+  归档: /archives/
+
+hero:
+  eyebrow: JIEBAO'S DIGITAL GARDEN · 2026
+  title: Hello,I am is HH De JieBao!
+  subtitle: 欢迎来到我的次元笔记空间，在这里收集代码、灵感和闪闪发光的日常。
+  primary_text: 开始阅读
+  secondary_text: 关于我
+
+profile:
+  avatar: /images/avatar.png
+  name: HH De JieBao
+  role: Full-stack Developer
+  bio: 热爱技术、动漫与创造。正在持续探索前端、后端和 AI 应用开发。
+  location: China
+  status: 正在学习与创作中
+  github: https://github.com/wangyujie615
+  motto: 用代码建造世界，用文字记录航程。
+  focus:
+    - 前端工程化
+    - AI 应用开发
+    - 后端与架构
+    - 算法与设计模式
+
+footer_text: 保持好奇，持续表达。今日も頑張ろう！
